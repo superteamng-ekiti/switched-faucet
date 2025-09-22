@@ -4,6 +4,7 @@ import { getFaucetConfig } from "./config";
 
 export interface FaucetRequest {
   walletAddress: string;
+  amount: string;
 }
 
 export interface FaucetResponse {
@@ -44,7 +45,7 @@ export default async function handler(
   }
 
   try {
-    const { walletAddress }: FaucetRequest = req.body;
+    const { walletAddress, amount }: FaucetRequest = req.body;
 
     if (!walletAddress) {
       return res.status(400).json({
@@ -56,7 +57,12 @@ export default async function handler(
     const ipAddress = getClientIP(req);
     const config = getFaucetConfig();
 
-    const result = await dispenseTokens(config, walletAddress, ipAddress);
+    const result = await dispenseTokens(
+      config,
+      walletAddress,
+      amount,
+      ipAddress
+    );
     const remainingRequests = getRemainingRequests(
       config,
       walletAddress,
