@@ -97,7 +97,8 @@ export const dispenseTokens = async (
       connection,
       config.faucetKeypair,
       tokenMint,
-      recipientPublicKey
+      recipientPublicKey,
+      true
     );
 
     console.log("recipient ATA: ", recipientTokenAccount.address);
